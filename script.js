@@ -35,23 +35,23 @@ if (mobileToggle && navMenu) {
   });
 }
 
-// 2. HERO VIDEO HOVER PLAY/PAUSE LOGIC
-const mediaContainer = document.querySelector('.hero-media');
-const video = document.getElementById('heroVideo');
+// // 2. HERO VIDEO HOVER PLAY/PAUSE LOGIC
+// const mediaContainer = document.querySelector('.hero-media');
+// const video = document.getElementById('heroVideo');
 
-if (mediaContainer && video) {
-  mediaContainer.addEventListener('mouseenter', () => {
-    const playPromise = video.play();
-    if (playPromise !== undefined) {
-      playPromise.catch(error => { console.log("Auto-play prevented"); });
-    }
-  });
+// if (mediaContainer && video) {
+//   mediaContainer.addEventListener('mouseenter', () => {
+//     const playPromise = video.play();
+//     if (playPromise !== undefined) {
+//       playPromise.catch(error => { console.log("Auto-play prevented"); });
+//     }
+//   });
   
-  mediaContainer.addEventListener('mouseleave', () => {
-    video.pause();
-    video.currentTime = 0; 
-  });
-}
+//   mediaContainer.addEventListener('mouseleave', () => {
+//     video.pause();
+//     video.currentTime = 0; 
+//   });
+// }
 
 // 3. SCROLL REVEAL ANIMATIONS
 const observer = new IntersectionObserver((entries) => {
@@ -63,3 +63,34 @@ const observer = new IntersectionObserver((entries) => {
 }, { threshold: 0.1 });
 
 document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+// HOW IT WORKS TOGGLE LOGIC
+function switchTab(type) {
+  const clientContent = document.getElementById('content-client');
+  const freelancerContent = document.getElementById('content-freelancer');
+  const buttons = document.querySelectorAll('.works-toggle-btn');
+
+  if (type === 'client') {
+    // Show Client, Hide Freelancer
+    clientContent.style.display = 'grid';
+    setTimeout(() => clientContent.classList.add('active'), 10); // Small delay for animation
+    
+    freelancerContent.classList.remove('active');
+    setTimeout(() => freelancerContent.style.display = 'none', 300);
+
+    // Update Buttons
+    buttons[0].classList.add('active');
+    buttons[1].classList.remove('active');
+  } else {
+    // Show Freelancer, Hide Client
+    freelancerContent.style.display = 'grid';
+    setTimeout(() => freelancerContent.classList.add('active'), 10);
+
+    clientContent.classList.remove('active');
+    setTimeout(() => clientContent.style.display = 'none', 300);
+
+    // Update Buttons
+    buttons[1].classList.add('active');
+    buttons[0].classList.remove('active');
+  }
+}
